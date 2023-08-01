@@ -6,10 +6,11 @@ class App(tk.Tk):
         
         # create a menu
         self.menu = tk.Menu()
+        
 
 
 
 if __name__ == '__main__':
     app = App()
-    app.title = 'LiteLIS'
+    app.title('LiteLIS')
     app.mainloop()
