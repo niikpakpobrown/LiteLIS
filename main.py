@@ -27,3 +27,4 @@ except mysql.connector.Error as error:
     # If an exception is raised, print the error message
     print(f"Error connecting to the database: {error}")
 
+
