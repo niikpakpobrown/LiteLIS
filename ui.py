@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -22,43 +23,75 @@ class App(tk.Tk):
         self.results_entry_btn.place(relx=0.5, rely=0.4, anchor="center")
         self.print_results_btn.place(relx=0.5, rely=0.6, anchor="center")
 
-
+    # results entry window
     def results_entry(self):
+        # create toplevel window
         patient_form = tk.Toplevel(self)
         patient_form.title("Results Entry")
         patient_form.geometry("800x600")
         #style = ttk.Style()
-        #style.configure("My.Style", background="lightblue", borderwidth=2, relief="solid")
+        #style.configure("My.Style", background="lightblue", borderwidth=10, relief="solid")
+
+        #create frame to hold patient details
         top_frame = ttk.Frame(patient_form)
         top_frame.pack(padx=10, pady=10, fill=tk.BOTH)
 
+        # patient name field
         ttk.Label(top_frame, text="Patient Name:").grid(row=0, column=0, padx=5, pady=5)    
         patient_name = ttk.Entry(top_frame)
         patient_name.grid(row=0, column=1, padx=5, pady=5)
-
+        
+        # patient_id field
         ttk.Label(top_frame, text="Patient ID:").grid(row=0, column=2, padx=5, pady=5)
         patient_id = ttk.Entry(top_frame)
         patient_id.grid(row=0, column=3, padx=5, pady=5)
 
+        #patient age field
         ttk.Label(top_frame, text="Age:").grid(row=0, column=4, padx=5, pady=5)
         age = ttk.Entry(top_frame)
         age.grid(row=0, column=5, padx=5, pady=5)
         
+        #patient sex field
         ttk.Label(top_frame, text="Sex:").grid(row=1, column=0, padx=5, pady=5)
         sex = ttk.Combobox(top_frame, values=["Male", "Female", "Other"])
         sex.grid(row=1, column=1, padx=5, pady=5)
 
+        #date field
         ttk.Label(top_frame, text="Date:").grid(row=1, column=2, padx=5, pady=5)
         date = ttk.Entry(top_frame)
         date.grid(row=1, column=3, padx=5, pady=5)
 
-
+        #create middle frame
         middle_frame = ttk.Frame(patient_form)
         middle_frame.pack(padx=10, pady=10, fill=tk.BOTH)
 
-        ttk.Label(middle_frame, text="Total Bilirubin").grid(row=0, column=0, padx=5, pady=5)
-        t_bil = ttk.Entry(middle_frame)
-        t_bil.grid(row=0, column=1, padx=50, pady=5)
+        # create results entry headings
+        ttk.Label(middle_frame, text="Test", font=("Helvetica", 12, "bold")).grid(row=0, column=0, padx=5, pady=5, columnspan=4)
+        ttk.Label(middle_frame, text="Result", font=("Helvetica", 12, "bold")).grid(row=0, column=4, padx=50, pady=5, columnspan=4)
+        ttk.Label(middle_frame, text="Reference range", font=("Helvetica", 12, "bold")).grid(row=0, column=8, padx=10, pady=5, columnspan=2)
+        ttk.Label(middle_frame, text="Unit", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
+
+        # create t bil field
+        ttk.Label(middle_frame, text="Total Bilirubin", font=("Helvetica", 12, "bold")).grid(row=1, column=0, padx=5, pady=5, columnspan=4)
+        t_bil = ttk.Entry(middle_frame, font=("Helvetica", 12, "bold"))
+        t_bil.grid(row=1, column=4, padx=50, pady=5, columnspan=4)
+
+        # create t bil reference range
+        ttk.Label(middle_frame, text="0 - 10", font=("Helvetica", 12, "bold")).grid(row=1, column=8, padx=10, pady=5, columnspan=2)
+
+        # create t bil unit field
+        ttk.Label(middle_frame, text="umol/l", font=("Helvetica", 12, "bold")).grid(row=1, column=10, padx=20, pady=5)
+
+        # create D bil field
+        ttk.Label(middle_frame, text="Direct Bilirubin", font=("Helvetica", 12, "bold")).grid(row=2, column=0, padx=5, pady=5, columnspan=4)
+        d_bil = ttk.Entry(middle_frame, font=("Helvetica", 12, "bold"))
+        d_bil.grid(row=2, column=4, padx=50, pady=5, columnspan=4)
+
+        # create D bil reference range
+        ttk.Label(middle_frame, text="0 - 10", font=("Helvetica", 12, "bold")).grid(row=2, column=8, padx=10, pady=5, columnspan=2)
+
+        # create D bil unit field
+        ttk.Label(middle_frame, text="umol/l", font=("Helvetica", 12, "bold")).grid(row=2, column=10, padx=20, pady=5)
 
 if __name__ == '__main__':
     app = App()
