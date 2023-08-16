@@ -72,9 +72,23 @@ class App(tk.Tk):
         ttk.Label(middle_frame, text="Unit", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
 
         # create Total bilirubin entry points
-        t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0-10", unit="umol/l")
+        t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
         t_bil.create_widgets()
 
+        # create Direct bilirubin entry points
+        d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
+        d_bil.create_widgets()
+
+        # create ALT entry points
+        alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
+        alt.create_widgets()
+
+        # create AST entry  points
+        ast = TestElement(parent_frame=middle_frame, row=4, test_name="AST", r_range="10 - 35", unit="U/L")
+        ast.create_widgets()
+    
+        # create ALP entry points
+        
 
 
 if __name__ == '__main__':
