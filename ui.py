@@ -88,8 +88,20 @@ class App(tk.Tk):
         ast.create_widgets()
     
         # create ALP entry points
-        
+        alp = TestElement(parent_frame=middle_frame, row=5, test_name="ALP", r_range="38 - 126", unit="U/L")
+        alp.create_widgets()
 
+        # create ggt entry points
+        ggt = TestElement(parent_frame=middle_frame, row=6, test_name="GGT", r_range="12 - 58", unit="U/L")
+        ggt.create_widgets()
+
+        # create total protein entry points
+        tp = TestElement(parent_frame=middle_frame, row=7, test_name="Total Protien", r_range="63 - 82", unit="g/L")
+        tp.create_widgets()
+
+        # create albumin entry points
+        alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
+        alb.create_widgets()
 
 if __name__ == '__main__':
     app = App()
