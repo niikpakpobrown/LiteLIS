@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
+from TestElement import TestElement 
 
 class App(tk.Tk):
     def __init__(self):
@@ -71,27 +71,11 @@ class App(tk.Tk):
         ttk.Label(middle_frame, text="Reference range", font=("Helvetica", 12, "bold")).grid(row=0, column=8, padx=10, pady=5, columnspan=2)
         ttk.Label(middle_frame, text="Unit", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
 
-        # create t bil field
-        ttk.Label(middle_frame, text="Total Bilirubin", font=("Helvetica", 12, "bold")).grid(row=1, column=0, padx=5, pady=5, columnspan=4)
-        t_bil = ttk.Entry(middle_frame, font=("Helvetica", 12, "bold"))
-        t_bil.grid(row=1, column=4, padx=50, pady=5, columnspan=4)
+        # create Total bilirubin entry points
+        t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0-10", unit="umol/l")
+        t_bil.create_widgets()
 
-        # create t bil reference range
-        ttk.Label(middle_frame, text="0 - 10", font=("Helvetica", 12, "bold")).grid(row=1, column=8, padx=10, pady=5, columnspan=2)
 
-        # create t bil unit field
-        ttk.Label(middle_frame, text="umol/l", font=("Helvetica", 12, "bold")).grid(row=1, column=10, padx=20, pady=5)
-
-        # create D bil field
-        ttk.Label(middle_frame, text="Direct Bilirubin", font=("Helvetica", 12, "bold")).grid(row=2, column=0, padx=5, pady=5, columnspan=4)
-        d_bil = ttk.Entry(middle_frame, font=("Helvetica", 12, "bold"))
-        d_bil.grid(row=2, column=4, padx=50, pady=5, columnspan=4)
-
-        # create D bil reference range
-        ttk.Label(middle_frame, text="0 - 10", font=("Helvetica", 12, "bold")).grid(row=2, column=8, padx=10, pady=5, columnspan=2)
-
-        # create D bil unit field
-        ttk.Label(middle_frame, text="umol/l", font=("Helvetica", 12, "bold")).grid(row=2, column=10, padx=20, pady=5)
 
 if __name__ == '__main__':
     app = App()
