@@ -68,8 +68,8 @@ class App(tk.Tk):
         # create results entry headings
         ttk.Label(middle_frame, text="Test", font=("Helvetica", 12, "bold")).grid(row=0, column=0, padx=5, pady=5, columnspan=4)
         ttk.Label(middle_frame, text="Result", font=("Helvetica", 12, "bold")).grid(row=0, column=4, padx=50, pady=5, columnspan=4)
-        ttk.Label(middle_frame, text="Reference range", font=("Helvetica", 12, "bold")).grid(row=0, column=8, padx=10, pady=5, columnspan=2)
-        ttk.Label(middle_frame, text="Unit", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
+        ttk.Label(middle_frame, text="Unit", font=("Helvetica", 12, "bold")).grid(row=0, column=8, padx=10, pady=5, columnspan=2)
+        ttk.Label(middle_frame, text="Reference range", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
 
         # create Total bilirubin entry points
         t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
@@ -102,6 +102,20 @@ class App(tk.Tk):
         # create albumin entry points
         alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
         alb.create_widgets()
+
+
+        #create frame to hold buttons
+        bottom_frame = ttk.Frame(patient_form)
+        bottom_frame.pack(padx=10, pady=10, fill=tk.BOTH)
+
+        #create save button
+        self.button = ttk.Button(bottom_frame, text="Save", style="Modern.TButton")
+        self.button.grid(row=0, column=1, padx=10, pady=10, sticky='e')
+
+        #create clear button
+        self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton")
+        self.button.grid(row=0, column=2, padx=10, pady=10, sticky='e')     
+
 
 if __name__ == '__main__':
     app = App()
