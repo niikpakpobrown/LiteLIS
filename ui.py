@@ -163,7 +163,7 @@ class App(tk.Tk):
             int(self.age.get()),
             self.sex.get(),
             self.date.get(),
-            float(self._bil.get()),
+            float(self.t_bil.get()),
             float(self.d_bil.get()),
             float(self.alt.get()),
             float(self.ast.get()),
