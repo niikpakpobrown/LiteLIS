@@ -1,10 +1,23 @@
 import tkinter as tk
 from tkinter import ttk
-from TestElement import TestElement 
+import mysql.connector  
+
+from Lis_fxns import TestElement, InsertResult
+
+
+# connect to server
+conn = mysql.connector.connect(
+host= "localhost",
+user= "root",
+password= "timothy69"    
+)
+
+
 
 class App(tk.Tk):
-    def __init__(self):
+    def __init__(self, conn):
         super().__init__()
+        self.conn = conn
         
         # create a main window
         self.menu = tk.Menu()
@@ -22,7 +35,7 @@ class App(tk.Tk):
         # place buttons at the centre of the window
         self.results_entry_btn.place(relx=0.5, rely=0.4, anchor="center")
         self.print_results_btn.place(relx=0.5, rely=0.6, anchor="center")
-
+    
     # results entry window
     def results_entry(self):
         # create toplevel window
@@ -109,14 +122,32 @@ class App(tk.Tk):
         bottom_frame.pack(padx=10, pady=10, fill=tk.BOTH)
 
         #create save button
-        self.button = ttk.Button(bottom_frame, text="Save", style="Modern.TButton")
+        self.button = ttk.Button(bottom_frame, text="Save", style="Modern.TButton", command=self.save_data)
         self.button.grid(row=0, column=1, padx=10, pady=10, sticky='e')
 
         #create clear button
         self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton")
         self.button.grid(row=0, column=2, padx=10, pady=10, sticky='e')     
 
+    def save_data(self):
+        insert_handler = InsertResult(self.conn)
+        insert_handler.insert_data(
+            patient_id.get(),
+            patient_name.get(),
+            int(age.get()),
+            sex.get(),
+            date.get(),
+            float(t_bil.get()),
+            float(d_bil.get()),
+            float(alt.get()),
+            float(ast.get()),
+            float(alp.get()),
+            float(ggt.get()),
+            float(tp.get()),
+            float(alb.get())
+        )
+
 
 if __name__ == '__main__':
-    app = App()
+    app = App(conn)
     app.mainloop()
