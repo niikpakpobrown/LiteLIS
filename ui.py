@@ -35,6 +35,20 @@ class App(tk.Tk):
         # place buttons at the centre of the window
         self.results_entry_btn.place(relx=0.5, rely=0.4, anchor="center")
         self.print_results_btn.place(relx=0.5, rely=0.6, anchor="center")
+
+        self.patient_name = None
+        self.patient_id = None
+        self.age = None
+        self.sex = None
+        self.date = None
+        self.t_bill = None
+        self.d_bill = None
+        self.alt = None
+        self.ast = None
+        self.alp = None
+        self.ggt = None
+        self.tp = None
+        self.alb = None
     
     # results entry window
     def results_entry(self):
@@ -53,31 +67,36 @@ class App(tk.Tk):
         ttk.Label(top_frame, text="Patient Name:").grid(row=0, column=0, padx=5, pady=5)    
         patient_name = ttk.Entry(top_frame)
         patient_name.grid(row=0, column=1, padx=5, pady=5)
-        
+        self.patient_name = patient_name
+
         # patient_id field
         ttk.Label(top_frame, text="Patient ID:").grid(row=0, column=2, padx=5, pady=5)
         patient_id = ttk.Entry(top_frame)
         patient_id.grid(row=0, column=3, padx=5, pady=5)
+        self.patient_id = patient_id
 
         #patient age field
         ttk.Label(top_frame, text="Age:").grid(row=0, column=4, padx=5, pady=5)
         age = ttk.Entry(top_frame)
         age.grid(row=0, column=5, padx=5, pady=5)
-        
+        self.age = age
+
         #patient sex field
         ttk.Label(top_frame, text="Sex:").grid(row=1, column=0, padx=5, pady=5)
         sex = ttk.Combobox(top_frame, values=["Male", "Female", "Other"])
         sex.grid(row=1, column=1, padx=5, pady=5)
+        self.sex = sex
 
         #date field
         ttk.Label(top_frame, text="Date:").grid(row=1, column=2, padx=5, pady=5)
         date = ttk.Entry(top_frame)
         date.grid(row=1, column=3, padx=5, pady=5)
+        self.date = date
 
         #create middle frame
         middle_frame = ttk.Frame(patient_form)
         middle_frame.pack(padx=10, pady=10, fill=tk.BOTH)
-
+        
         # create results entry headings
         ttk.Label(middle_frame, text="Test", font=("Helvetica", 12, "bold")).grid(row=0, column=0, padx=5, pady=5, columnspan=4)
         ttk.Label(middle_frame, text="Result", font=("Helvetica", 12, "bold")).grid(row=0, column=4, padx=50, pady=5, columnspan=4)
@@ -87,35 +106,42 @@ class App(tk.Tk):
         # create Total bilirubin entry points
         t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
         t_bil.create_widgets()
+        self.tbil = t_bil
 
         # create Direct bilirubin entry points
         d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
         d_bil.create_widgets()
+        self.d_bill =d_bil
 
         # create ALT entry points
         alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
         alt.create_widgets()
+        self.alt = alt
 
         # create AST entry  points
         ast = TestElement(parent_frame=middle_frame, row=4, test_name="AST", r_range="10 - 35", unit="U/L")
         ast.create_widgets()
-    
+        self.ast = ast
+
         # create ALP entry points
         alp = TestElement(parent_frame=middle_frame, row=5, test_name="ALP", r_range="38 - 126", unit="U/L")
         alp.create_widgets()
+        self.alp = alp
 
         # create ggt entry points
         ggt = TestElement(parent_frame=middle_frame, row=6, test_name="GGT", r_range="12 - 58", unit="U/L")
         ggt.create_widgets()
+        self.ggt = ggt
 
         # create total protein entry points
         tp = TestElement(parent_frame=middle_frame, row=7, test_name="Total Protien", r_range="63 - 82", unit="g/L")
         tp.create_widgets()
+        self.tp = tp
 
         # create albumin entry points
         alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
         alb.create_widgets()
-
+        self.alb = alb
 
         #create frame to hold buttons
         bottom_frame = ttk.Frame(patient_form)
@@ -132,19 +158,19 @@ class App(tk.Tk):
     def save_data(self):
         insert_handler = InsertResult(self.conn)
         insert_handler.insert_data(
-            patient_id.get(),
-            patient_name.get(),
-            int(age.get()),
-            sex.get(),
-            date.get(),
-            float(t_bil.get()),
-            float(d_bil.get()),
-            float(alt.get()),
-            float(ast.get()),
-            float(alp.get()),
-            float(ggt.get()),
-            float(tp.get()),
-            float(alb.get())
+            self.patient_id.get(),
+            self.patient_name.get(),
+            int(self.age.get()),
+            self.sex.get(),
+            self.date.get(),
+            float(self._bil.get()),
+            float(self.d_bil.get()),
+            float(self.alt.get()),
+            float(self.ast.get()),
+            float(self.alp.get()),
+            float(self.ggt.get()),
+            float(self.tp.get()),
+            float(self.alb.get())
         )
 
 
