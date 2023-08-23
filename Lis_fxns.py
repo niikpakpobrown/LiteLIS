@@ -9,22 +9,33 @@ class TestElement:
         self.r_range = r_range
         self.unit = unit
 
+        self.entry_widget = None
+
         self.create_widgets()
 
     def create_widgets(self):
         ttk.Label(self.parent_frame, text=self.test_name, font=("Helvetica", 12, "bold")).grid(row=self.row, column=0, padx=5, pady=5, columnspan=4)
-        ttk.Entry(self.parent_frame, font=("Helvetica", 12, "bold")).grid(row=self.row, column=4, padx=50, pady=5, columnspan=4)
+        entry = ttk.Entry(self.parent_frame, font=("Helvetica", 12, "bold"))
+        entry.grid(row=self.row, column=4, padx=50, pady=5, columnspan=4)
+        self.entry_widget = entry
         ttk.Label(self.parent_frame, text=self.unit, font=("Helvetica", 12, "bold")).grid(row=self.row, column=8, padx=20, pady=5)
         ttk.Label(self.parent_frame, text=self.r_range, font=("Helvetica", 12, "bold")).grid(row=self.row, column=10, padx=10, pady=5, columnspan=2)
+
+
+    def get_value(self):
+        return self.entry_widget.get()
        
 class InsertResult:
     def __init__(self, db_connector):
         self.db_connector = db_connector
 
     def insert_data(self, patient_id, patient_name, age, sex, test_date, t_bil, d_bil, alt, ast, alp, ggt, tp, alb):
+        cursor= self.db_connector.cursor()
+        cursor.execute("USE local_lis")
+
         # SQL INSERT query
         insert_query = """
-        INSERT INTO LabTestResults (patient_id, patient_name, age, sex, test_date, t_bil, d_bil, alt, ast, alp, ggt, tp, alb)
+        INSERT INTO LabTestResults (patient_id, patient_name, age, sex, test_date, t_bil_result, d_bil_result, alt_result, ast_result, alp_result, ggt_result, tp_result, alb_result)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 

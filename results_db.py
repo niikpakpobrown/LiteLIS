@@ -1,40 +1,42 @@
 import mysql.connector
 
-try:
-    # connect to server
-    conn = mysql.connector.connect(
-    host= "localhost",
-    user= "root",
-    password= "timothy69"    
-)
+def initialize_database():
+    try:
+        # connect to server
+        conn = mysql.connector.connect(
+        host= "localhost",
+        user= "root",
+        password= "timothy69"    
+        )
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
     
-    # Check if the database exists
-    cursor.execute("SHOW DATABASES")
-    databases = [db[0] for db in cursor]
+        # Check if the database exists
+        cursor.execute("SHOW DATABASES")
+        databases = [db[0] for db in cursor]
+        createTable = None
+        
+        if "local_lis" in databases:
+         print("local_lis database already exists.")
+        else:
+            # Create the local_lis database
+            cursor.execute("CREATE DATABASE local_lis")
+            print("local_lis database created successfully.")
 
-    if "local_lis" in databases:
-        print("local_lis database already exists.")
-    else:
-        # Create the local_lis database
-        cursor.execute("CREATE DATABASE local_lis")
-        print("local_lis database created successfully.")
-
-    # use local_lis DB
-    cursor.execute("USE local_lis")
+         # use local_lis DB
+        cursor.execute("USE local_lis")
 
 
-    # Check if the LabTestResults table exists
-    cursor.execute("SHOW TABLES LIKE 'LabTestResults'")
-    table_exists = cursor.fetchone()
+         # Check if the LabTestResults table exists
+        cursor.execute("SHOW TABLES LIKE 'LabTestResults'")
+        table_exists = cursor.fetchone()
 
-    if table_exists:
-        print("LabTestResults table already exists.")
-    else:
+        if table_exists:
+            print("LabTestResults table already exists.")
+        else:
         # Create the LabTestResults table
-        createTable = """
-        CREATE TABLE LabTestResults (
+            createTable = """
+            CREATE TABLE LabTestResults (
             patient_id VARCHAR(20) NOT NULL PRIMARY KEY,
             patient_name VARCHAR(100) NOT NULL,
             age INT,
@@ -48,9 +50,9 @@ try:
             ggt_result FLOAT,
             tp_result FLOAT,
             alb_result FLOAT
-        );"""
+            );"""
         cursor.execute(createTable)
         print("LabTestResults table created successfully.")
 
-except mysql.connector.Error as err:
-    print("Error:", err)
+    except mysql.connector.Error as err:
+        print("Error:", err)

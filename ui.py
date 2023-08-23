@@ -3,7 +3,7 @@ from tkinter import ttk
 import mysql.connector  
 
 from Lis_fxns import TestElement, InsertResult
-
+import results_db
 
 # connect to server
 conn = mysql.connector.connect(
@@ -12,7 +12,7 @@ user= "root",
 password= "timothy69"    
 )
 
-
+results_db.initialize_database()
 
 class App(tk.Tk):
     def __init__(self, conn):
@@ -104,44 +104,44 @@ class App(tk.Tk):
         ttk.Label(middle_frame, text="Reference range", font=("Helvetica", 12, "bold")).grid(row=0, column=10, padx=20, pady=5)
 
         # create Total bilirubin entry points
-        t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
-        t_bil.create_widgets()
-        self.tbil = t_bil
+        self.t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
+        self.t_bil.create_widgets()
+         
 
         # create Direct bilirubin entry points
-        d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
-        d_bil.create_widgets()
-        self.d_bil =d_bil
+        self.d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
+        self.d_bil.create_widgets()
+        
 
         # create ALT entry points
-        alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
-        alt.create_widgets()
-        self.alt = alt
+        self.alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
+        self.alt.create_widgets()
+        
 
         # create AST entry  points
-        ast = TestElement(parent_frame=middle_frame, row=4, test_name="AST", r_range="10 - 35", unit="U/L")
-        ast.create_widgets()
-        self.ast = ast
+        self.ast = TestElement(parent_frame=middle_frame, row=4, test_name="AST", r_range="10 - 35", unit="U/L")
+        self.ast.create_widgets()
+        
 
         # create ALP entry points
-        alp = TestElement(parent_frame=middle_frame, row=5, test_name="ALP", r_range="38 - 126", unit="U/L")
-        alp.create_widgets()
-        self.alp = alp
+        self.alp = TestElement(parent_frame=middle_frame, row=5, test_name="ALP", r_range="38 - 126", unit="U/L")
+        self.alp.create_widgets()
+        
 
         # create ggt entry points
-        ggt = TestElement(parent_frame=middle_frame, row=6, test_name="GGT", r_range="12 - 58", unit="U/L")
-        ggt.create_widgets()
-        self.ggt = ggt
+        self.ggt = TestElement(parent_frame=middle_frame, row=6, test_name="GGT", r_range="12 - 58", unit="U/L")
+        self.ggt.create_widgets()
+        
 
         # create total protein entry points
-        tp = TestElement(parent_frame=middle_frame, row=7, test_name="Total Protien", r_range="63 - 82", unit="g/L")
-        tp.create_widgets()
-        self.tp = tp
+        self.tp = TestElement(parent_frame=middle_frame, row=7, test_name="Total Protien", r_range="63 - 82", unit="g/L")
+        self.tp.create_widgets()
+        
 
         # create albumin entry points
-        alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
-        alb.create_widgets()
-        self.alb = alb
+        self.alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
+        self.alb.create_widgets()
+        
 
         #create frame to hold buttons
         bottom_frame = ttk.Frame(patient_form)
@@ -163,14 +163,14 @@ class App(tk.Tk):
             int(self.age.get()),
             self.sex.get(),
             self.date.get(),
-            float(self.t_bil.get()),
-            float(self.d_bil.get()),
-            float(self.alt.get()),
-            float(self.ast.get()),
-            float(self.alp.get()),
-            float(self.ggt.get()),
-            float(self.tp.get()),
-            float(self.alb.get())
+            float(self.t_bil.get_value()),
+            float(self.d_bil.get_value()),
+            float(self.alt.get_value()),
+            float(self.ast.get_value()),
+            float(self.alp.get_value()),
+            float(self.ggt.get_value()),
+            float(self.tp.get_value()),
+            float(self.alb.get_value())
         )
 
 
