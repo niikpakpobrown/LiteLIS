@@ -41,8 +41,8 @@ class App(tk.Tk):
         self.age = None
         self.sex = None
         self.date = None
-        self.t_bill = None
-        self.d_bill = None
+        self.t_bil = None
+        self.d_bil = None
         self.alt = None
         self.ast = None
         self.alp = None
@@ -111,7 +111,7 @@ class App(tk.Tk):
         # create Direct bilirubin entry points
         d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
         d_bil.create_widgets()
-        self.d_bill =d_bil
+        self.d_bil =d_bil
 
         # create ALT entry points
         alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
