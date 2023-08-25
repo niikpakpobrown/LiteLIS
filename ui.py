@@ -1,19 +1,23 @@
+# Import the required libraries
 import tkinter as tk
 from tkinter import ttk
 import mysql.connector  
 
+# Import custom classes and modules
 from Lis_fxns import TestElement, InsertResult
 import results_db
 
-# connect to server
+# Connect to the MySQL server
 conn = mysql.connector.connect(
 host= "localhost",
 user= "root",
 password= "timothy69"    
 )
 
+# Initialize and configure the database
 results_db.initialize_database()
 
+# Define the main application class using Tkinter
 class App(tk.Tk):
     def __init__(self, conn):
         super().__init__()
@@ -36,6 +40,7 @@ class App(tk.Tk):
         self.results_entry_btn.place(relx=0.5, rely=0.4, anchor="center")
         self.print_results_btn.place(relx=0.5, rely=0.6, anchor="center")
 
+        # Initialize variables for patient data
         self.patient_name = None
         self.patient_id = None
         self.age = None
@@ -50,20 +55,18 @@ class App(tk.Tk):
         self.tp = None
         self.alb = None
     
-    # results entry window
+    # Function to open the results entry window
     def results_entry(self):
         # create toplevel window
         patient_form = tk.Toplevel(self)
         patient_form.title("Results Entry")
         patient_form.geometry("800x600")
-        #style = ttk.Style()
-        #style.configure("My.Style", background="lightblue", borderwidth=10, relief="solid")
 
         #create frame to hold patient details
         top_frame = ttk.Frame(patient_form)
         top_frame.pack(padx=10, pady=10, fill=tk.BOTH)
 
-        # patient name field
+        # Create patient details fields and labels
         ttk.Label(top_frame, text="Patient Name:").grid(row=0, column=0, padx=5, pady=5)    
         patient_name = ttk.Entry(top_frame)
         patient_name.grid(row=0, column=1, padx=5, pady=5)
@@ -107,37 +110,30 @@ class App(tk.Tk):
         self.t_bil = TestElement(parent_frame=middle_frame,row=1, test_name="Total bilirubin", r_range="0 - 10", unit="umol/l")
         self.t_bil.create_widgets()
          
-
         # create Direct bilirubin entry points
         self.d_bil = TestElement(parent_frame=middle_frame,row=2, test_name="Direct bilirubin", r_range="0 - 5", unit="umol/l")
-        self.d_bil.create_widgets()
-        
+        self.d_bil.create_widgets()    
 
         # create ALT entry points
         self.alt = TestElement(parent_frame=middle_frame, row=3, test_name="ALT", r_range="10 - 45", unit="U/L")
         self.alt.create_widgets()
         
-
         # create AST entry  points
         self.ast = TestElement(parent_frame=middle_frame, row=4, test_name="AST", r_range="10 - 35", unit="U/L")
         self.ast.create_widgets()
         
-
         # create ALP entry points
         self.alp = TestElement(parent_frame=middle_frame, row=5, test_name="ALP", r_range="38 - 126", unit="U/L")
         self.alp.create_widgets()
         
-
         # create ggt entry points
         self.ggt = TestElement(parent_frame=middle_frame, row=6, test_name="GGT", r_range="12 - 58", unit="U/L")
         self.ggt.create_widgets()
         
-
         # create total protein entry points
         self.tp = TestElement(parent_frame=middle_frame, row=7, test_name="Total Protien", r_range="63 - 82", unit="g/L")
         self.tp.create_widgets()
         
-
         # create albumin entry points
         self.alb = TestElement(parent_frame=middle_frame, row=8, test_name="Albumin", r_range="35 - 50", unit="g/L")
         self.alb.create_widgets()
@@ -155,6 +151,7 @@ class App(tk.Tk):
         self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton")
         self.button.grid(row=0, column=2, padx=10, pady=10, sticky='e')     
 
+    # Function to save entered data to the database
     def save_data(self):
         insert_handler = InsertResult(self.conn)
         insert_handler.insert_data(
@@ -173,7 +170,8 @@ class App(tk.Tk):
             float(self.alb.get_value())
         )
 
-
+# Entry point of the program
 if __name__ == '__main__':
+    # Create an instance of the App class and start the GUI event loop
     app = App(conn)
     app.mainloop()
