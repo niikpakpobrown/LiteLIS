@@ -1,5 +1,7 @@
+# Import the MySQL Connector library
 import mysql.connector
 
+# Function to initialize and configure the database
 def initialize_database():
     try:
         # connect to server
@@ -9,13 +11,15 @@ def initialize_database():
         password= "timothy69"    
         )
 
+        # Create a cursor to interact with the database
         cursor = conn.cursor()
     
         # Check if the database exists
         cursor.execute("SHOW DATABASES")
         databases = [db[0] for db in cursor]
         createTable = None
-        
+
+        # Check if the target database 'local_lis' exists, create if not
         if "local_lis" in databases:
          print("local_lis database already exists.")
         else:
@@ -23,11 +27,11 @@ def initialize_database():
             cursor.execute("CREATE DATABASE local_lis")
             print("local_lis database created successfully.")
 
-         # use local_lis DB
+        # use local_lis DB
         cursor.execute("USE local_lis")
 
 
-         # Check if the LabTestResults table exists
+        # Check if the 'LabTestResults' table exists
         cursor.execute("SHOW TABLES LIKE 'LabTestResults'")
         table_exists = cursor.fetchone()
 
@@ -55,4 +59,5 @@ def initialize_database():
         print("LabTestResults table created successfully.")
 
     except mysql.connector.Error as err:
+        # Handle and print any errors that occur during the process
         print("Error:", err)
