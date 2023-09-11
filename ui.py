@@ -151,6 +151,22 @@ class App(tk.Tk):
         self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton")
         self.button.grid(row=0, column=2, padx=10, pady=10, sticky='e')     
 
+    # Function to clear the form 
+    def clear_form(self):
+    # Reset all the input fields to empty or default values
+        self.patient_name.delete(0, tk.END)
+        self.patient_id.delete(0, tk.END)
+        self.age.delete(0, tk.END)
+        self.sex.set("")  # Clear the selected sex
+        self.date.delete(0, tk.END)
+        self.t_bil.entry_widget.delete(0, tk.END)
+        self.d_bil.entry_widget.delete(0, tk.END)
+        self.alt.entry_widget.delete(0, tk.END)
+        self.ast.entry_widget.delete(0, tk.END)
+        self.alp.entry_widget.delete(0, tk.END)
+        self.ggt.entry_widget.delete(0, tk.END)
+        self.tp.entry_widget.delete(0, tk.END)
+        self.alb.entry_widget.delete(0, tk.END)
     # Function to save entered data to the database
     def save_data(self):
         insert_handler = InsertResult(self.conn)
@@ -169,6 +185,11 @@ class App(tk.Tk):
             float(self.tp.get_value()),
             float(self.alb.get_value())
         )
+
+        #clear the form
+        self.clear_form()
+
+
 
 # Entry point of the program
 if __name__ == '__main__':
