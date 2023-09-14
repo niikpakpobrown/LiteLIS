@@ -34,7 +34,7 @@ class App(tk.Tk):
 
         # create themed results entry and printing buttons
         self.results_entry_btn= ttk.Button(self, text="Results Entry", style="Modern.TButton", command=self.results_entry)
-        self.print_results_btn = ttk.Button(self, text="Print Results", style="Modern.TButton")
+        self.print_results_btn = ttk.Button(self, text="Print Results", style="Modern.TButton", command=self.print_results)
         
         # place buttons at the centre of the window
         self.results_entry_btn.place(relx=0.5, rely=0.4, anchor="center")
@@ -148,7 +148,7 @@ class App(tk.Tk):
         self.button.grid(row=0, column=1, padx=10, pady=10, sticky='e')
 
         #create clear button
-        self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton")
+        self.button = ttk.Button(bottom_frame, text="Clear", style="Modern.TButton", command= self.clear_form)
         self.button.grid(row=0, column=2, padx=10, pady=10, sticky='e')     
 
     # Function to clear the form 
@@ -188,6 +188,37 @@ class App(tk.Tk):
 
         #clear the form
         self.clear_form()
+
+    
+    def clear_entries(self):
+        # Clear the contents of the entry widgets
+            self.name_entry.delete(0, tk.END)
+            self.id_entry.delete(0, tk.END)
+    
+    # print results from database
+    def print_results(self):
+        # create a new top level
+        print_window= tk.Toplevel(self)
+        print_window.title("Print Results")
+        print_window.geometry("800x600")
+
+        # create frame to hold widgets
+        frame = tk.Frame(print_window, background="lightblue")
+        frame.place(relx=0.5, rely=0.5, anchor='center') 
+
+        # Label and Entry for name 
+        ttk.Label(frame, text="Name:", style="Modern.TButton").grid(row=0, column=0, padx=5, pady=5)
+        self.name_entry = ttk.Entry(frame, style="Modern.TButton")
+        self.name_entry.grid(row=0, column=1, padx=5, pady=5)
+
+        # Label and Entry for Patient ID
+        ttk.Label(frame, text="Patient ID:", style="Modern.TButton").grid(row=1, column=0, padx=5, pady=5)
+        self.id_entry = ttk.Entry(frame, style="Modern.TButton")
+        self.id_entry.grid(row=1, column=1, padx=5, pady=5)
+
+        # Add search and clear buttons
+        ttk.Button(frame, text="Search").grid(row=2, column=0, padx=5, pady=5)
+        ttk.Button(frame, text="Clear", command=self.clear_entries).grid(row=2, column=1, padx=5, pady=5)
 
 
 
