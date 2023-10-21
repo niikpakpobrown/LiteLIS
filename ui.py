@@ -220,6 +220,7 @@ class App(tk.Tk):
         ttk.Button(frame, text="Search").grid(row=2, column=0, padx=5, pady=5)
         ttk.Button(frame, text="Clear", command=self.clear_entries).grid(row=2, column=1, padx=5, pady=5)
 
+        
 
 
 # Entry point of the program

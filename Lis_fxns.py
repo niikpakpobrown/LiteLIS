@@ -58,5 +58,21 @@ class InsertResult:
         cursor.close()
         print("Data inserted successfully.")
 
+# custom class for printing results
+class LisDatabase:
+    def __init__(self, db_connector):
+         self.db_connector = db_connector
+
+    def search_results_by_patient_id(self, patient_id):
+        try:
+            cursor = self.conn.cursor()
+            query = "SELECT * FROM your_table_name WHERE patient_id = %s"
+            cursor.execute(query, (patient_id,))
+            results = cursor.fetchall()
+            return results
+        except Exception as e:
+            print("Error searching database:", str(e))
+        finally:
+            cursor.close()
 
 
