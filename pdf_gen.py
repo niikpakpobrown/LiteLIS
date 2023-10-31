@@ -1,3 +1,4 @@
+import mysql.connector
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -7,6 +8,25 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import PageTemplate, Frame
 from reportlab.platypus.flowables import PageBreak
 from reportlab.platypus.doctemplate import PageTemplate, BaseDocTemplate
+
+
+
+# Connect to the MySQL database
+conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="timothy69",
+        database="local_lis"  # Replace with your actual database name
+    )
+
+cursor = conn.cursor()
+
+    # Fetch information for the patient with ID "1234"
+patient_id = "1234"
+query = f"SELECT * FROM labtestresults WHERE patient_id = '{patient_id}'"
+cursor.execute(query)
+patient_data = cursor.fetchone()
+
 
 # Define the PageTemplate with one-inch margins
 page_margin = 72  # 1 inch = 72 points
@@ -57,7 +77,7 @@ centered_title = Paragraph("KML LABORATORY", centered_title_style)
 content.append(centered_title)
 
 # Information Line 1
-info_line1 = Paragraph("NAME:         AGE:        SEX:        ", header_style)
+info_line1 = Paragraph(f"NAME: {patient_data[0]}   AGE: {patient_data[1]}   SEX: {patient_data[2]}", header_style)
 content.append(info_line1)
 
 # Information Line 2

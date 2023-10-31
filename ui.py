@@ -217,7 +217,7 @@ class App(tk.Tk):
         self.id_entry.grid(row=1, column=1, padx=5, pady=5)
 
         # Add search and clear buttons
-        ttk.Button(frame, text="Search").grid(row=2, column=0, padx=5, pady=5)
+        ttk.Button(frame, text="Search", command=self.).grid(row=2, column=0, padx=5, pady=5)
         ttk.Button(frame, text="Clear", command=self.clear_entries).grid(row=2, column=1, padx=5, pady=5)
 
         
