@@ -53,15 +53,15 @@ title = Paragraph("PATIENT RESULTS", title_style)
 content.append(title)
 
 # Centered Title "AE LABORATORY"
-centered_title = Paragraph("AE LABORATORY", centered_title_style)
+centered_title = Paragraph("KML LABORATORY", centered_title_style)
 content.append(centered_title)
 
 # Information Line 1
-info_line1 = Paragraph("NAME:\t\t\tAGE:\t\t\tSEX:", header_style)
+info_line1 = Paragraph("NAME:         AGE:        SEX:        ", header_style)
 content.append(info_line1)
 
 # Information Line 2
-info_line2 = Paragraph("SAMPLE ID:\t\t\tDATE:", header_style)
+info_line2 = Paragraph("SAMPLE ID:      DATE:       ", header_style)
 content.append(info_line2)
 
 # Add some space
@@ -73,9 +73,14 @@ content.append(liver_function_title)
 
 # Create a table for the parameter results
 data = [["Parameter", "Result", "Unit", "Ref Range"],
-        ["Parameter 1", "Result 1", "Unit 1", "Ref Range 1"],
-        ["Parameter 2", "Result 2", "Unit 2", "Ref Range 2"],
-        ["Parameter 3", "Result 3", "Unit 3", "Ref Range 3"]]
+        ["Total Bilirubun", "Result 1", "umol/L", "[3.0-22.0]"],
+        ["Direct Bilirubin", "Result 2", "umol/L", "[0.0-5.0]"],
+        ["AST", "Result 3", "U/L", "[10-35]"],
+        ["ALT", "35", "U/L", "[10-45]"],
+        ["ALP", "Result 3", "U/L", "[38-126]"],
+        ["GGT", "Result 3", "U/L", "[12-58]"],
+        ["TP", "Result 3", "g/L", "[63-82]"],
+        ["ALB", "Result 3", "g/L", "[35-50]"]]
 
 table = Table(data, colWidths=[160, 80, 80, 160])
 table.setStyle(TableStyle([
