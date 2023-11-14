@@ -1,38 +1,33 @@
 import mysql.connector
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
-from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak
 from reportlab.platypus.tables import Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import PageTemplate, Frame
-from reportlab.platypus.flowables import PageBreak
 from reportlab.platypus.doctemplate import PageTemplate, BaseDocTemplate
-
-
+from reportlab.platypus.frames import Frame
 
 # Connect to the MySQL database
 conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="timothy69",
-        database="local_lis"  # Replace with your actual database name
-    )
+    host="localhost",
+    user="root",
+    password="timothy69",
+    database="local_lis"  # Replace with your actual database name
+)
 
 cursor = conn.cursor()
 
-    # Fetch information for the patient with ID "1234"
+# Fetch information for the patient with ID "1234"
 patient_id = "1234"
 query = f"SELECT * FROM labtestresults WHERE patient_id = '{patient_id}'"
 cursor.execute(query)
 patient_data = cursor.fetchone()
 
-
 # Define the PageTemplate with one-inch margins
 page_margin = 72  # 1 inch = 72 points
 page_template = PageTemplate(
     id='lab_results',
-    frames=[Frame(page_margin, page_margin, letter[0] - 2*page_margin, letter[1] - 2*page_margin)],
+    frames=[Frame(page_margin, page_margin, letter[0] - 2 * page_margin, letter[1] - 2 * page_margin)],
 )
 
 # Create a SimpleDocTemplate with the specified PageTemplate
@@ -76,13 +71,22 @@ content.append(title)
 centered_title = Paragraph("KML LABORATORY", centered_title_style)
 content.append(centered_title)
 
-# Information Line 1
-info_line1 = Paragraph(f"NAME: {patient_data[0]}        AGE: {patient_data[1]}  SEX: {patient_data[2]}", header_style)
-content.append(info_line1)
+# Create a 2x3 table for patient information
+patient_info_data = [
+    ["NAME: " + f"{patient_data[0]}", "AGE:" + (f"{patient_data[1]}").upper(), "SEX:", f"{patient_data[2]}"],
+    ["SAMPLE ID:", "", "DATE:", ""]
+]
 
-# Information Line 2
-info_line2 = Paragraph("SAMPLE ID:      DATE:       ", header_style)
-content.append(info_line2)
+patient_info_table = Table(patient_info_data, colWidths=[80, 120, 80, 40, 80, 40])
+patient_info_table.setStyle(TableStyle([
+    ('INNERGRID', (0, 0), (-1, -1), 0, colors.white),  # Hide inner grid lines
+    ('BOX', (0, 0), (-1, -1), 0.5, colors.white),  # Hide outer box lines
+    ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+    ('FONTNAME', (0, 0), (-1, -1), 'Helvetica'),
+    ('BOTTOMPADDING', (0, 0), (-1, -1), 12),
+]))
+
+content.append(patient_info_table)
 
 # Add some space
 content.append(Spacer(1, 12))
@@ -92,15 +96,17 @@ liver_function_title = Paragraph("LIVER FUNCTION TEST", centered_title_style)
 content.append(liver_function_title)
 
 # Create a table for the parameter results
-data = [["Parameter", "Result", "Unit", "Ref Range"],
-        ["Total Bilirubun", "Result 1", "umol/L", "[3.0-22.0]"],
-        ["Direct Bilirubin", "Result 2", "umol/L", "[0.0-5.0]"],
-        ["AST", "Result 3", "U/L", "[10-35]"],
-        ["ALT", "35", "U/L", "[10-45]"],
-        ["ALP", "Result 3", "U/L", "[38-126]"],
-        ["GGT", "Result 3", "U/L", "[12-58]"],
-        ["TP", "Result 3", "g/L", "[63-82]"],
-        ["ALB", "Result 3", "g/L", "[35-50]"]]
+data = [
+    ["Parameter", "Result", "Unit", "Ref Range"],
+    ["Total Bilirubin", "Result 1", "umol/L", "[3.0-22.0]"],
+    ["Direct Bilirubin", "Result 2", "umol/L", "[0.0-5.0]"],
+    ["AST", "Result 3", "U/L", "[10-35]"],
+    ["ALT", "35", "U/L", "[10-45]"],
+    ["ALP", "Result 3", "U/L", "[38-126]"],
+    ["GGT", "Result 3", "U/L", "[12-58]"],
+    ["TP", "Result 3", "g/L", "[63-82]"],
+    ["ALB", "Result 3", "g/L", "[35-50]"]
+]
 
 table = Table(data, colWidths=[160, 80, 80, 160])
 table.setStyle(TableStyle([
@@ -117,3 +123,7 @@ content.append(table)
 
 # Build the PDF
 doc.build(content)
+
+# Close the database connection
+cursor.close()
+conn.close()
