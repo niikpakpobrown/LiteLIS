@@ -77,7 +77,7 @@ centered_title = Paragraph("KML LABORATORY", centered_title_style)
 content.append(centered_title)
 
 # Information Line 1
-info_line1 = Paragraph(f"NAME: {patient_data[0]}   AGE: {patient_data[1]}   SEX: {patient_data[2]}", header_style)
+info_line1 = Paragraph(f"NAME: {patient_data[0]}        AGE: {patient_data[1]}  SEX: {patient_data[2]}", header_style)
 content.append(info_line1)
 
 # Information Line 2
