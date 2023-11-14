@@ -7,6 +7,8 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus.doctemplate import PageTemplate, BaseDocTemplate
 from reportlab.platypus.frames import Frame
 
+from datetime import date
+
 # Connect to the MySQL database
 conn = mysql.connector.connect(
     host="localhost",
@@ -73,8 +75,8 @@ content.append(centered_title)
 
 # Create a 2x3 table for patient information
 patient_info_data = [
-    ["NAME: " + f"{patient_data[0]}", "AGE:" + (f"{patient_data[1]}").upper(), "SEX:", f"{patient_data[2]}"],
-    ["SAMPLE ID:", "", "DATE:", ""]
+    ["NAME: ", (f"{patient_data[1]}").upper(), "AGE: ", f"{patient_data[2]}", "SEX: ", f"{patient_data[3]}"],
+    ["SAMPLE ID: ", f"{patient_data[0]}", "DATE: ", date.today().strftime("%d/%m/%Y")]
 ]
 
 patient_info_table = Table(patient_info_data, colWidths=[80, 120, 80, 40, 80, 40])
@@ -98,14 +100,14 @@ content.append(liver_function_title)
 # Create a table for the parameter results
 data = [
     ["Parameter", "Result", "Unit", "Ref Range"],
-    ["Total Bilirubin", "Result 1", "umol/L", "[3.0-22.0]"],
-    ["Direct Bilirubin", "Result 2", "umol/L", "[0.0-5.0]"],
-    ["AST", "Result 3", "U/L", "[10-35]"],
-    ["ALT", "35", "U/L", "[10-45]"],
-    ["ALP", "Result 3", "U/L", "[38-126]"],
-    ["GGT", "Result 3", "U/L", "[12-58]"],
-    ["TP", "Result 3", "g/L", "[63-82]"],
-    ["ALB", "Result 3", "g/L", "[35-50]"]
+    ["Total Bilirubin", f"{patient_data[5]}", "umol/L", "[3.0-22.0]"],
+    ["Direct Bilirubin", f"{patient_data[6]}", "umol/L", "[0.0-5.0]"],
+    ["AST", f"{patient_data[8]}", "U/L", "[10-35]"],
+    ["ALT", f"{patient_data[7]}", "U/L", "[10-45]"],
+    ["ALP", f"{patient_data[9]}", "U/L", "[38-126]"],
+    ["GGT", f"{patient_data[10]}", "U/L", "[12-58]"],
+    ["TP", f"{patient_data[11]}", "g/L", "[63-82]"],
+    ["ALB", f"{patient_data[12]}", "g/L", "[35-50]"]
 ]
 
 table = Table(data, colWidths=[160, 80, 80, 160])
